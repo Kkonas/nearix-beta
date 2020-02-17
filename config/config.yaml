@@ -1,0 +1,12 @@
+---
+- presets
+  token: 
+  version: 0.0.1
+
+- discord
+  servers:
+
+- state
+  sessionToken:
+  sessionServers:
+...
