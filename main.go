@@ -10,8 +10,10 @@ import (
 	"strings"
 	"io/ioutil"
 	"os"
+	"log"
 	//"path/filepath"
-	"gopkg.in/yaml.v2"
+	"github.com/bwmarrin/discordgo"
+	//"gopkg.in/yaml.v2"
 )
 // Begin function declaration section
 func readFile(path string){
@@ -21,6 +23,11 @@ func readFile(path string){
 func init(){
 	// Perform initial check
 
+}
+func logErr(err error){
+	if err != nil{
+		log.Fatal(err)
+	}
 }
 func readStdin() string{
 	reader := bufio.NewReader(os.Stdin)
@@ -43,6 +50,11 @@ type State struct{
 // ENDOF structs
 // Begin main
 func main(){
-	print("Input filename:\n")
-	readFile(readStdin())
+	client, err := discordgo.New("NjIyNTEzNTIwMzc3ODU2MDEw.XkMDww.US7_wwkIbf6luj3Pcd0bCj8I0HA")
+	logErr(err)
+	err = client.Open()
+	logErr(err)
+	for _, guild := range client.State.Guilds{
+		fmt.Printf(guild.ID+"\n")
+	}
 }
