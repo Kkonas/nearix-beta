@@ -1,12 +1,4 @@
----
-- presets
-  token: 
-  version: 0.0.1
-
-- discord
-  servers:
-
-- state
-  sessionToken:
-  sessionServers:
-...
+token: 
+version: 0.1.0
+session:
+  guilds:
