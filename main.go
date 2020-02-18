@@ -52,7 +52,7 @@ func initCheck(confStruct *Config){
 }
 func logErr(err error){
 	if err != nil{
-		log.Fatal(err)
+		log.Print(err)
 	}
 }
 func readStdin() string{
