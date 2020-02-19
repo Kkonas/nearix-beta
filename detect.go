@@ -7,13 +7,18 @@ import (
 	//"fmt"
 	"net/http"
 	"os"
+	"io/ioutil"
+	"crypto/md5"
+	"encoding/hex"
 	"io"
 )
 
 // BEGIN function definition
-func receive(url string){
-	err := Download("images/template.jpg","url")
-
+func receive(url string) string{
+	err := Download("images/template.jpg",url)
+	logErr(err)
+	hash := Hash("images/template.jpg")
+	return(hex.EncodeToString(hash)+"\n")
 }
 func Download(path string, url string) error{
 	response, err := http.Get(url)
@@ -36,12 +41,19 @@ func Download(path string, url string) error{
 	defer output.Close()
 	return err
 }
-func Compare() string{}
+func Compare() string{return "Hello World!"}
 
-func Hash(path string) string{
-	output, err := os.Open(path)
+func Hash(path string) []byte{
+	output, err := ioutil.ReadFile(path)
 	logErr(err)
+	hash := md5.New()
+	hash.Write(output)
+	hashSum := hash.Sum(nil)
+	hexEncoded := make([]byte, hex.EncodedLen(len(hashSum)))
+	hex.Encode(hexEncoded, hashSum)
 
+
+	return hexEncoded
 }
 
 // ENDOF function definition
