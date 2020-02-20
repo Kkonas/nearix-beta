@@ -1,6 +1,7 @@
 token: 
 constants:
-        pokecordid: "365975655608745985"
-version: 0.1.0
+  pokecordid: "365975655608745985"
+  language: EN
+version: ""
 session:
-  guilds:
+  guilds: []
