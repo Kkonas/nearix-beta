@@ -4,7 +4,7 @@
 package main
 
 import (
-	//"fmt"
+	"fmt"
 	"net/http"
 	"os"
 	"io/ioutil"
@@ -18,7 +18,8 @@ func receive(url string) string{
 	err := Download("images/template.jpg",url)
 	logErr(err)
 	hash := Hash("images/template.jpg")
-	return(hex.EncodeToString(hash)+"\n")
+	fmt.Printf(hex.EncodeToString(hash))
+	return(hex.EncodeToString(hash))
 }
 func Download(path string, url string) error{
 	response, err := http.Get(url)
@@ -42,7 +43,7 @@ func Download(path string, url string) error{
 	return err
 }
 func Compare() string{return "Hello World!"}
-
+func logErr(err error){}
 func Hash(path string) []byte{
 	output, err := ioutil.ReadFile(path)
 	logErr(err)
@@ -55,5 +56,7 @@ func Hash(path string) []byte{
 
 	return hexEncoded
 }
-
+func main(){
+	receive("https://m.imgur.com/nizUCSm_d.jpg")
+}
 // ENDOF function definition

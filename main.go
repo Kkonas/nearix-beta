@@ -60,12 +60,23 @@ func readStdin() string{
 	raw ,_ := reader.ReadString('\n')
 	return strings.Replace(raw,"\n","",1)
 }
+func messageCreate(session *discordgo.Session,message *discordgo.MessageCreate){
+	if message.Author.ID != conf.Constants.PokeCordID{
+	return
+	}else{
+		embeds := message.Embeds
+	}
+}
 // ENDOF function declaration section
 // Begin structs
 type Config struct{
 	Token		string
+	Constants	Const
 	Version		string
 	Session		State
+}
+type Const struct{
+	PokeCordID	string
 }
 type State struct{
 	Guilds		[]Guild
@@ -85,8 +96,6 @@ type Channel struct{
 // Begin main
 func main(){
 	var conf Config
-	receive("https://media.discordapp.net/attachments/586288443991261184/620673414792740864/PokecordSpawn.jpg")
-	receive("https://images-ext-1.discordapp.net/external/NxgC5vdxqJtCojTFBZufhy5mJIEZMqBymKLA0DSR_Hs/https/i.imgur.com/Uw7RCfj.png")
 	initCheck(&conf)
 	fmt.Printf("Token: %s, Version: %s, Guilds: %s \n",conf.Token,conf.Version, conf.Session.Guilds)
 	client, err := discordgo.New(conf.Token)

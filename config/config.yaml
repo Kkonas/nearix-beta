@@ -1,4 +1,6 @@
 token: 
+constants:
+        pokecordid: "365975655608745985"
 version: 0.1.0
 session:
   guilds:

@@ -2,8 +2,10 @@
 package main
  import (
 	"log"
+	"os"
 	"regexp"
 	"strings"
+	"gopkg.in/yaml.v2"
 	"fmt"
 	"time"
 	"io/ioutil"
@@ -27,8 +29,7 @@ func hashes(structC *[]Pokemon){
 
 }
 type pokeToAppend struct{
-	Name string
-	Hash string
+	Name map[string]string
 }
 func messageCreate(s *discordgo.Session, m *discordgo.MessageCreate){
 	if m.Author.ID != "365975655608745985"{
@@ -42,12 +43,14 @@ func messageCreate(s *discordgo.Session, m *discordgo.MessageCreate){
 			finalName := strings.Replace((strings.Replace(strings.Replace(replaced,"Base stats for ","",1),"#","",1)),".","",1)
 			hash :=receive(url)
 			fmt.Printf(finalName+"\n")
-			file, err := os.OpenFile("goHashes.json:wq
-			")
-			bytes, err := ioutil.ReadAll()
+			file, err := os.OpenFile("config/hashes.yaml",os.O_APPEND|os.O_WRONLY, 0600)
 			var poke pokeToAppend
-			err = json.Unmarshal()
-			_,err := s.ChannelMessageSend("631206053887082496",hash)
+			poke.Name = make(map[string]string)
+			poke.Name[finalName] = hash
+			out , err := yaml.Marshal(&poke)
+			defer file.Close()
+			_,err = file.Write(out)
+			_,err = s.ChannelMessageSend("631206053887082496",hash)
 			logErr(err)
 		}
 	}
@@ -59,9 +62,9 @@ func main(){
 	logErr(err)
 	client.AddHandler(messageCreate)
 	client.Open()
-	for _, name := range pokemon{
+	for index, name := range pokemon{
 		time.Sleep(3 * time.Second)
-		fmt.Printf("Now: "+name.Name+"\n")
-		_,err = client.ChannelMessageSend("631206053887082496","p!info "+name.Name)}
-
+		fmt.Printf("Now: %s %d/%d\n",name.Name,index,len(pokemon))
+		_,err = client.ChannelMessageSend("631206053887082496","p!info "+name.Name)
+}
 }
