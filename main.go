@@ -9,6 +9,8 @@ import (
 	"bufio"
 	"strings"
 	"io/ioutil"
+	"os/signal"
+	"syscall"
 	"os"
 	"log"
 	"github.com/bwmarrin/discordgo"
@@ -55,13 +57,13 @@ func initCheck(confStruct *Config,langStruct *LangConfig){
 	readConfigYaml("config/config.yaml",confStruct)
 	readLangYaml("config/languages.yaml",langStruct)
 	if confStruct.Token == ""{
-		fmt.Printf(Lang(confStruct,langStruct,1,"emptytoken"))
+		fmt.Printf(Lang(confStruct,langStruct,"emptytoken"))
 		response := readStdin()
 		confStruct.Token = response
 	}
 }
-func Lang(confStruct *Config,langStruct *LangConfig, id int,message string) string{
-	return langStruct.Languages[confStruct.Constants.Language][id][message]
+func Lang(confStruct *Config,langStruct *LangConfig,message string) string{
+	return langStruct.Languages[confStruct.Constants.Language][message]
 }
 func logErr(err error){
 	if err != nil{
@@ -73,21 +75,31 @@ func readStdin() string{
 	raw ,_ := reader.ReadString('\n')
 	return strings.Replace(raw,"\n","",1)
 }
-/*func messageCreate(session *discordgo.Session,message *discordgo.MessageCreate){
-	if message.Author.ID != conf.Constants.PokeCordID{
+func messageCreate(session *discordgo.Session,message *discordgo.MessageCreate){
+	var insideConf Config
+	readConfigYaml("config/config.yaml",&insideConf)
+	if message.Author.ID != insideConf.Constants.PokeCordID{
 	return
 	}else{
+		if message.Embeds == nil{
+			return
+		}else{
 		embeds := message.Embeds
 		for _, embed := range embeds{
-			spawnUrl := embed.Image.URL
-
+			if (embed.Image == nil){
+				return
+			}else{
+				spawnUrl := embed.Image.URL
+				fmt.Printf(receive(spawnUrl))
+				}
+			}
 		}
 	}
-}*/
+}
 // ENDOF function declaration section
 // Begin structs
 type LangConfig struct{
-	Languages	map[string][]map[string]string
+	Languages	map[string]map[string]string
 }
 type Config struct{
 	Token		string
@@ -122,6 +134,7 @@ func main(){
 	fmt.Printf("Token: %s, Version: %s, Guilds: %s ,ID: %s\n",conf.Token,conf.Version, conf.Session.Guilds, conf.Constants.PokeCordID)
 	client, err := discordgo.New(conf.Token)
 	logErr(err)
+	client.AddHandler(messageCreate)
 	err = client.Open()
 	logErr(err)
 	for index, guild := range client.State.Guilds{
@@ -133,4 +146,10 @@ func main(){
 		}
 	}
 	writeConfigYaml(configFile,&conf)
+	fmt.Println("JokerCord is now running.  Press CTRL-C to exit.")
+	sc := make(chan os.Signal, 1)
+	signal.Notify(sc, syscall.SIGINT, syscall.SIGTERM, os.Interrupt, os.Kill)
+	<-sc
+
+	client.Close()
 }

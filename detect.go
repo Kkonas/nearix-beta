@@ -4,22 +4,30 @@
 package main
 
 import (
-	"fmt"
 	"net/http"
+	"fmt"
+	"gopkg.in/yaml.v2"
 	"os"
 	"io/ioutil"
 	"crypto/md5"
 	"encoding/hex"
 	"io"
 )
-
+// BEGIN structs
+type Pokemons struct{
+	Pokemon map[string]string
+}
+// ENDOF structs
 // BEGIN function definition
 func receive(url string) string{
+	var pokemons Pokemons
 	err := Download("images/template.jpg",url)
 	logErr(err)
 	hash := Hash("images/template.jpg")
-	fmt.Printf(hex.EncodeToString(hash))
-	return(hex.EncodeToString(hash))
+	hashHex := hex.EncodeToString(hash)
+	readPokemonList(&pokemons)
+	pokemonName := Compare(hashHex, &pokemons)
+	return(pokemonName)
 }
 func Download(path string, url string) error{
 	response, err := http.Get(url)
@@ -42,8 +50,14 @@ func Download(path string, url string) error{
 	defer output.Close()
 	return err
 }
-func Compare() string{return "Hello World!"}
-func logErr(err error){}
+func readPokemonList(pokemonStruct *Pokemons){
+	reader, err := ioutil.ReadFile("config/hashes.yaml")
+	logErr(err)
+	yaml.Unmarshal(reader, pokemonStruct)
+}
+func Compare(hash string, pokemonStruct *Pokemons) string{
+	return pokemonStruct.Pokemon[hash]
+}
 func Hash(path string) []byte{
 	output, err := ioutil.ReadFile(path)
 	logErr(err)
@@ -55,8 +69,5 @@ func Hash(path string) []byte{
 
 
 	return hexEncoded
-}
-func main(){
-	receive("https://m.imgur.com/nizUCSm_d.jpg")
 }
 // ENDOF function definition
