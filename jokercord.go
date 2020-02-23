@@ -92,7 +92,7 @@ func messageCreate(session *discordgo.Session,message *discordgo.MessageCreate){
 				return
 			}else{
 				spawnUrl := embed.Image.URL
-				fmt.Printf(receive(spawnUrl))
+				session.ChannelMessageSend(message.ChannelID,"p!catch "+receive(spawnUrl))
 				}
 			}
 		}
@@ -131,7 +131,7 @@ func init(){
 		}
 		fmt.Printf(" :")
 		selectedLang := readStdin()
-		if lang.Languages[selectedLang] != nil{
+		if lang.Languages[selectedLang] != nil || len(lang.Languages[selectedLang]) != 0{
 			conf.Constants.Language = selectedLang
 			conf.Constants.First = false
 			updateConfigYaml()
