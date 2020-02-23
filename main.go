@@ -57,17 +57,21 @@ func initCheck(confStruct *Config,langStruct *LangConfig){
 	readConfigYaml("config/config.yaml",confStruct)
 	readLangYaml("config/languages.yaml",langStruct)
 	if confStruct.Token == ""{
-		fmt.Printf(Lang(confStruct,langStruct,"emptytoken"))
+		fmt.Printf(Lang("emptytoken"))
+		fmt.Printf(Lang("tokenprompt"))
 		response := readStdin()
 		confStruct.Token = response
+		updateConfigYaml()
 	}
 }
-func Lang(confStruct *Config,langStruct *LangConfig,message string) string{
-	return langStruct.Languages[confStruct.Constants.Language][message]
+func Lang(message string) string{
+	return lang.Languages[conf.Constants.Language][message]
 }
 func logErr(err error){
 	if err != nil{
-		log.Print(err)
+		readConfigYaml("config/config.yaml",&conf)
+		readLangYaml("config/languages.yaml",&lang)
+		log.Print(lang.Languages[conf.Constants.Language]["error"])
 	}
 }
 func readStdin() string{
@@ -76,9 +80,7 @@ func readStdin() string{
 	return strings.Replace(raw,"\n","",1)
 }
 func messageCreate(session *discordgo.Session,message *discordgo.MessageCreate){
-	var insideConf Config
-	readConfigYaml("config/config.yaml",&insideConf)
-	if message.Author.ID != insideConf.Constants.PokeCordID{
+	if message.Author.ID != conf.Constants.PokeCordID{
 	return
 	}else{
 		if message.Embeds == nil{
@@ -96,6 +98,55 @@ func messageCreate(session *discordgo.Session,message *discordgo.MessageCreate){
 		}
 	}
 }
+func refresh(client *discordgo.Session){
+	if len(conf.Session.Guilds) == 0{
+	for index, guild := range client.State.Guilds{
+		appendGuild := Guild{guild.ID,guild.Name,nil}
+		conf.Session.Guilds = append(conf.Session.Guilds,appendGuild)
+		for _, channel := range guild.Channels{
+			appendChannel := Channel{channel.ID,channel.Name,false}
+			conf.Session.Guilds[index].Channels = append(conf.Session.Guilds[index].Channels, appendChannel)
+		}
+	}
+	if len(conf.Session.Guilds) == 0{
+		return
+	}else{
+	updateConfigYaml()
+	}
+	}
+}
+func updateConfigYaml(){
+	writeConfigYaml("config/config.yaml",&conf)
+}
+func init(){
+	initCheck(&conf,&lang)
+	readConfigYaml(configFile,&conf)
+	client, err := discordgo.New(conf.Token)
+	logErr(err)
+	client.AddHandler(messageCreate)
+	if conf.Constants.First == true{
+		fmt.Printf("Please choose your language code. Available languages are: ")
+		for languageName,_ := range lang.Languages{
+			fmt.Printf(languageName+"|")
+		}
+		fmt.Printf(" :")
+		selectedLang := readStdin()
+		if lang.Languages[selectedLang] != nil{
+			conf.Constants.Language = selectedLang
+			conf.Constants.First = false
+			updateConfigYaml()
+		}else{
+			fmt.Printf("Chosen language is not valid.")
+			log.Fatal("Language error.")
+		}
+		err = client.Open()
+		if err != nil{
+		log.Fatal(lang.Languages[conf.Constants.Language]["tokenerror"])}
+		refresh(client)
+	}else{
+		err = client.Open()
+	}
+}
 // ENDOF function declaration section
 // Begin structs
 type LangConfig struct{
@@ -110,6 +161,7 @@ type Config struct{
 type Const struct{
 	PokeCordID	string
 	Language	string
+	First		bool
 }
 type State struct{
 	Guilds		[]Guild
@@ -127,26 +179,15 @@ type Channel struct{
 // ENDOF structs
 
 // Begin main
+// GLOBAL values
+var lang LangConfig
+var conf Config
+var client discordgo.Session
+// ENDOF GLOBAL values
 func main(){
-	var lang LangConfig
-	var conf Config
-	initCheck(&conf,&lang)
-	fmt.Printf("Token: %s, Version: %s, Guilds: %s ,ID: %s\n",conf.Token,conf.Version, conf.Session.Guilds, conf.Constants.PokeCordID)
-	client, err := discordgo.New(conf.Token)
-	logErr(err)
-	client.AddHandler(messageCreate)
-	err = client.Open()
-	logErr(err)
-	for index, guild := range client.State.Guilds{
-		appendGuild := Guild{guild.ID,guild.Name,nil}
-		conf.Session.Guilds = append(conf.Session.Guilds,appendGuild)
-		for _, channel := range guild.Channels{
-			appendChannel := Channel{channel.ID,channel.Name,false}
-			conf.Session.Guilds[index].Channels = append(conf.Session.Guilds[index].Channels, appendChannel)
-		}
-	}
-	writeConfigYaml(configFile,&conf)
-	fmt.Println("JokerCord is now running.  Press CTRL-C to exit.")
+	fmt.Printf("Token: %s, Version: %s, ID: %s\n",conf.Token,conf.Version, conf.Constants.PokeCordID)
+
+	fmt.Println(lang.Languages[conf.Constants.Language]["running"])
 	sc := make(chan os.Signal, 1)
 	signal.Notify(sc, syscall.SIGINT, syscall.SIGTERM, os.Interrupt, os.Kill)
 	<-sc

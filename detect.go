@@ -5,7 +5,6 @@ package main
 
 import (
 	"net/http"
-	"fmt"
 	"gopkg.in/yaml.v2"
 	"os"
 	"io/ioutil"
@@ -14,19 +13,16 @@ import (
 	"io"
 )
 // BEGIN structs
-type Pokemons struct{
-	Pokemon map[string]string
-}
 // ENDOF structs
 // BEGIN function definition
 func receive(url string) string{
-	var pokemons Pokemons
+	pokemons:= make(map[string]string)
 	err := Download("images/template.jpg",url)
 	logErr(err)
 	hash := Hash("images/template.jpg")
 	hashHex := hex.EncodeToString(hash)
-	readPokemonList(&pokemons)
-	pokemonName := Compare(hashHex, &pokemons)
+	readPokemonList(pokemons)
+	pokemonName := Compare(hashHex, pokemons)
 	return(pokemonName)
 }
 func Download(path string, url string) error{
@@ -50,13 +46,20 @@ func Download(path string, url string) error{
 	defer output.Close()
 	return err
 }
-func readPokemonList(pokemonStruct *Pokemons){
+func readPokemonList(pokemonStruct map[string]string){
 	reader, err := ioutil.ReadFile("config/hashes.yaml")
 	logErr(err)
 	yaml.Unmarshal(reader, pokemonStruct)
 }
-func Compare(hash string, pokemonStruct *Pokemons) string{
-	return pokemonStruct.Pokemon[hash]
+func Compare(hash string, pokemonStruct map[string]string) string{
+	var name string
+	for pokemon,pokemonHash := range pokemonStruct{
+		if pokemonHash == hash{
+		name = pokemon
+		}
+	}
+	return name
+
 }
 func Hash(path string) []byte{
 	output, err := ioutil.ReadFile(path)
