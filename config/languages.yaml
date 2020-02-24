@@ -7,6 +7,8 @@ languages:
                 tokenprompt: "Please enter your token: "
                 tokenerror: "It seems like your token is wrong."
                 fileerror: "A file couldn't be loaded."
+                welcome: "Welcome, "
+                latestversion: "Current version is the latest."
         "ES":
                 greeting: "Bienvenido al SelfBot JokerCord v2."
                 emptytoken: "Parece que tu token está vacío"
@@ -15,6 +17,8 @@ languages:
                 tokenprompt: "Por favor introduce tu token: "
                 tokenerror: "Parece que tu token está mal."
                 fileerror: "Un archivo no pudo ser cargado."
+                welcome: "Bienvenido, "
+                latestversion: "La versión está actualizada."
         "DE":
                 greeting: "Willkommen bei JokerCord v2 SelfBot"
                 emptytoken: "Dein Token ist leer"
@@ -23,6 +27,8 @@ languages:
                 tokenprompt: "Bitte füg dein Token ein: "
                 tokenerror: "Dein Token ist falsch."
                 fileerror: "Datei kann nich geladen werden."
+                welcome: "Willkommen, "
+                latestversion: "Das ist die Aktuelle Version."
         "FR":
                 greeting: "Bienvenue sur le bot JokerCord v2"
                 emptytoken: "Le token est manquant."
@@ -31,6 +37,8 @@ languages:
                 tokenprompt: "S'il vous plaît entrer votre token: "
                 tokenerror: "Votre token est incorrecte."
                 fileerror: "Le fichier n'a pas pu être chargé!"
+                welcome: "Bienvenue, "
+                latestversion: ""
         "NL":
                 greeting: "Welkom bij JokerCord v2 zelfbot"
                 emptytoken: "Uw token is leeg."
@@ -39,6 +47,8 @@ languages:
                 tokenprompt: "Voer uw token in: "
                 tokenerror: "Het lijkt erop dat uw token niet klopt"
                 fileerror: "Eem bestand kon niet worden geladen"
+                welcome: "Welkom, "
+                latestversion: ""
         "EL":
                 greeting: "Καλώς ήλθατε στο JokerCord v2 SelfBot."
                 emptytoken: "Your token is empty."

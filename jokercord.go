@@ -14,6 +14,7 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
+	"runtime"
 	"strings"
 	"syscall"
 
@@ -102,20 +103,20 @@ func exists(path string) bool {
 func confirmAndSelfUpdate() {
 	latest, found, err := selfupdate.DetectLatest("joker-ware/jokerhammer")
 	if err != nil {
-		log.Println("Error occurred while detecting version:", err)
+		fmt.Printf("Error occurred while detecting version:", err)
 		return
 	}
 
 	v := semver.MustParse(version)
 	if !found || latest.Version.LTE(v) {
-		log.Println("Current version is the latest")
+		fmt.Printf("Current version is the latest\n")
 		return
 	}
 
 	fmt.Print("Do you want to update to ", latest.Version, "? (y/n): ")
 	input := readStdin()
 	if input != "y" && input != "n" {
-		log.Println("Invalid input")
+		fmt.Printf("Invalid input")
 		return
 	}
 	if input == "n" {
@@ -124,14 +125,14 @@ func confirmAndSelfUpdate() {
 
 	exe, err := os.Executable()
 	if err != nil {
-		log.Println("Could not locate executable path")
+		fmt.Printf("Could not locate executable path")
 		return
 	}
 	if err := selfupdate.UpdateTo(latest.AssetURL, exe); err != nil {
-		log.Println("Error occurred while updating binary:", err)
+		fmt.Printf("Error occurred while updating binary:", err)
 		return
 	}
-	log.Println("Successfully updated to version", latest.Version)
+	fmt.Printf("Successfully updated to version", latest.Version)
 }
 
 // initCheck Checks config files
@@ -170,7 +171,7 @@ func logErr(err error) {
 	if err != nil {
 		readConfigYaml("config/config.yaml", &conf)
 		readLangYaml("config/languages.yaml", &lang)
-		log.Print(lang.Languages[conf.Constants.Language]["error"])
+		fmt.Printf(lang.Languages[conf.Constants.Language]["error"])
 	}
 }
 
@@ -178,7 +179,13 @@ func logErr(err error) {
 func readStdin() string {
 	reader := bufio.NewReader(os.Stdin)
 	raw, _ := reader.ReadString('\n')
-	return strings.Replace(raw, "\r\n", "", 1)
+	// Check if OS corresponds to Windows and replace Carriage Returns. Otherwise (lol) just replace
+	// new lines.
+	if runtime.GOOS == "windows" {
+		return strings.Replace(raw, "\r\n", "", 1)
+	} else {
+		return strings.Replace(raw, "\n", "", 1)
+	}
 }
 
 // messageCreate creates message for Catching
@@ -216,9 +223,10 @@ func updateConfigYaml() {
 	writeConfigYaml("config/config.yaml", &conf)
 }
 func init() {
+	var err error
 	initCheck(&conf, &lang)
 	readConfigYaml(configFile, &conf)
-	client, err := discordgo.New(conf.Token)
+	client, err = discordgo.New(conf.Token)
 	logErr(err)
 	client.AddHandler(messageCreate)
 	if conf.Constants.First == true {
@@ -295,12 +303,14 @@ type Channel struct {
 // GLOBAL values
 var lang LangConfig
 var conf Config
-var client discordgo.Session
+var client *discordgo.Session
 
 // ENDOF GLOBAL values
 func main() {
 	fmt.Printf("Token: %s, Version: %s, ID: %s\n", conf.Token, conf.Version, conf.Constants.PokeCordID)
 	fmt.Println(lang.Languages[conf.Constants.Language]["running"])
+	user, _ := client.User("@me")
+	fmt.Println(Lang("welcome") + user.Username + "#" + user.Discriminator + "!")
 	sc := make(chan os.Signal, 1)
 	signal.Notify(sc, syscall.SIGINT, syscall.SIGTERM, os.Interrupt, os.Kill)
 	<-sc
