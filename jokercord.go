@@ -87,7 +87,7 @@ func logErr(err error) {
 func readStdin() string {
 	reader := bufio.NewReader(os.Stdin)
 	raw, _ := reader.ReadString('\n')
-	return strings.Replace(raw, "\n", "", 1)
+	return strings.Replace(raw, "\r\n", "", 1)
 }
 
 // messageCreate creates message for Catching
@@ -97,8 +97,8 @@ func messageCreate(session *discordgo.Session, message *discordgo.MessageCreate)
 			embeds := message.Embeds
 			for _, embed := range embeds {
 				if embed.Image != nil {
-					spawnURL := embed.Image.URL
-					session.ChannelMessageSend(message.ChannelID, "p!catch "+receive(spawnURL))
+					pokename := receive(embed.Image.URL)
+					session.ChannelMessageSend(message.ChannelID, "p!catch "+pokename)
 				}
 			}
 		}
@@ -137,7 +137,7 @@ func init() {
 		}
 		fmt.Printf(" :")
 		selectedLang := readStdin()
-		if lang.Languages[selectedLang] != nil || len(lang.Languages[selectedLang]) != 0 {
+		if selectedLang != "" || len(selectedLang) != 0 {
 			conf.Constants.Language = selectedLang
 			conf.Constants.First = false
 			updateConfigYaml()
@@ -209,11 +209,9 @@ var client discordgo.Session
 // ENDOF GLOBAL values
 func main() {
 	fmt.Printf("Token: %s, Version: %s, ID: %s\n", conf.Token, conf.Version, conf.Constants.PokeCordID)
-
 	fmt.Println(lang.Languages[conf.Constants.Language]["running"])
 	sc := make(chan os.Signal, 1)
 	signal.Notify(sc, syscall.SIGINT, syscall.SIGTERM, os.Interrupt, os.Kill)
 	<-sc
-
 	client.Close()
 }
