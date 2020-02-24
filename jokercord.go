@@ -8,20 +8,28 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"io"
 	"io/ioutil"
 	"log"
+	"net/http"
 	"os"
 	"os/signal"
 	"strings"
 	"syscall"
 
+	"github.com/blang/semver"
 	"github.com/bwmarrin/discordgo"
+	"github.com/rhysd/go-github-selfupdate/selfupdate"
 	"gopkg.in/yaml.v2"
 )
 
 // Begin CONSTS
 
 const configFile = "config/config.yaml"
+const configFileURL = "https://github.com/joker-ware/jokerhammer/raw/stable/config/config.yaml"
+const langFileURL = "https://github.com/joker-ware/jokerhammer/raw/stable/config/languages.yaml"
+const hashesFileURL = "https://github.com/joker-ware/jokerhammer/raw/stable/config/hashes.yaml"
+const version = "1.0.0"
 
 // ENDOF CONSTS
 
@@ -57,7 +65,90 @@ func writeLangYaml(path string, langStruct *LangConfig) {
 	writeFile(path, output)
 }
 
+// DownloadFile will download a url to a local file.
+func DownloadFile(filepath string, url string) error {
+
+	// Get the data
+	resp, err := http.Get(url)
+	if err != nil {
+		return err
+	}
+	defer resp.Body.Close()
+
+	// Create the file
+	out, err := os.Create(filepath)
+	if err != nil {
+		return err
+	}
+	defer out.Close()
+
+	// Write the body to file
+	_, err = io.Copy(out, resp.Body)
+	return err
+}
+
+// exists returns whether the given file or directory exists
+func exists(path string) bool {
+	_, err := os.Stat(path)
+	if err == nil {
+		return true
+	}
+	if os.IsNotExist(err) {
+		return false
+	}
+	return true
+}
+
+func confirmAndSelfUpdate() {
+	latest, found, err := selfupdate.DetectLatest("joker-ware/jokerhammer")
+	if err != nil {
+		log.Println("Error occurred while detecting version:", err)
+		return
+	}
+
+	v := semver.MustParse(version)
+	if !found || latest.Version.LTE(v) {
+		log.Println("Current version is the latest")
+		return
+	}
+
+	fmt.Print("Do you want to update to ", latest.Version, "? (y/n): ")
+	input := readStdin()
+	if input != "y" && input != "n" {
+		log.Println("Invalid input")
+		return
+	}
+	if input == "n" {
+		return
+	}
+
+	exe, err := os.Executable()
+	if err != nil {
+		log.Println("Could not locate executable path")
+		return
+	}
+	if err := selfupdate.UpdateTo(latest.AssetURL, exe); err != nil {
+		log.Println("Error occurred while updating binary:", err)
+		return
+	}
+	log.Println("Successfully updated to version", latest.Version)
+}
+
+// initCheck Checks config files
 func initCheck(confStruct *Config, langStruct *LangConfig) {
+	confirmAndSelfUpdate()
+	if exists("config") == false {
+		os.Mkdir("config", os.ModeDir)
+	}
+	if exists("config/config.yaml") == false {
+		DownloadFile("config/config.yaml", configFileURL)
+	}
+	if exists("config/languages.yaml") == false {
+		DownloadFile("config/languages.yaml", langFileURL)
+	}
+	if exists("config/hashes.yaml") == false {
+		DownloadFile("config/hashes.yaml", hashesFileURL)
+	}
 	readConfigYaml("config/config.yaml", confStruct)
 	readLangYaml("config/languages.yaml", langStruct)
 	if confStruct.Token == "" {
