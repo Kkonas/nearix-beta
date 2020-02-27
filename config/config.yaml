@@ -3,6 +3,6 @@ constants:
   pokecordid: "365975655608745985"
   language: EN
   first: true
-version: 0.1.0
+version: 1.2.0
 session:
-  guilds: 
+  guilds:

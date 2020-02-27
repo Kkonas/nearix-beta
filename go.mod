@@ -7,6 +7,7 @@ require (
 	github.com/bwmarrin/discordgo v0.20.2
 	github.com/rhysd/go-github-selfupdate v1.2.1
 	github.com/shuLhan/go-bindata v3.4.0+incompatible // indirect
+	github.com/zserge/webview v0.0.0-20200121135717-9c1b0a888aa4
 	golang.org/x/mobile v0.0.0-20200222142934-3c8601c510d0
 	gopkg.in/yaml.v2 v2.2.8
 )

@@ -30,7 +30,7 @@ const configFile = "config/config.yaml"
 const configFileURL = "https://github.com/joker-ware/jokerhammer/raw/stable/config/config.yaml"
 const langFileURL = "https://github.com/joker-ware/jokerhammer/raw/stable/config/languages.yaml"
 const hashesFileURL = "https://github.com/joker-ware/jokerhammer/raw/stable/config/hashes.yaml"
-const version = "1.0.0"
+const version = "0.1.0"
 
 // ENDOF CONSTS
 
@@ -103,7 +103,7 @@ func exists(path string) bool {
 func confirmAndSelfUpdate() {
 	latest, found, err := selfupdate.DetectLatest("joker-ware/jokerhammer")
 	if err != nil {
-		fmt.Printf("Error occurred while detecting version:", err)
+		fmt.Println("Error occurred while detecting version:", err)
 		return
 	}
 
@@ -125,14 +125,14 @@ func confirmAndSelfUpdate() {
 
 	exe, err := os.Executable()
 	if err != nil {
-		fmt.Printf("Could not locate executable path")
+		fmt.Println("Could not locate executable path")
 		return
 	}
 	if err := selfupdate.UpdateTo(latest.AssetURL, exe); err != nil {
-		fmt.Printf("Error occurred while updating binary:", err)
+		fmt.Println("Error occurred while updating binary:", err)
 		return
 	}
-	fmt.Printf("Successfully updated to version", latest.Version)
+	fmt.Println("Successfully updated to version", latest.Version)
 }
 
 // initCheck Checks config files
@@ -307,6 +307,7 @@ var client *discordgo.Session
 
 // ENDOF GLOBAL values
 func main() {
+	go Start()
 	fmt.Printf("Token: %s, Version: %s, ID: %s\n", conf.Token, conf.Version, conf.Constants.PokeCordID)
 	fmt.Println(lang.Languages[conf.Constants.Language]["running"])
 	user, _ := client.User("@me")
