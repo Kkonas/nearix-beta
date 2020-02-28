@@ -30,7 +30,7 @@ const configFile = "config/config.yaml"
 const configFileURL = "https://github.com/joker-ware/jokerhammer/raw/stable/config/config.yaml"
 const langFileURL = "https://github.com/joker-ware/jokerhammer/raw/stable/config/languages.yaml"
 const hashesFileURL = "https://github.com/joker-ware/jokerhammer/raw/stable/config/hashes.yaml"
-const version = "0.1.0"
+const version = "1.0.0"
 
 // ENDOF CONSTS
 
@@ -183,9 +183,8 @@ func readStdin() string {
 	// new lines.
 	if runtime.GOOS == "windows" {
 		return strings.Replace(raw, "\r\n", "", 1)
-	} else {
-		return strings.Replace(raw, "\n", "", 1)
 	}
+	return strings.Replace(raw, "\n", "", 1)
 }
 
 // messageCreate creates message for Catching
@@ -207,7 +206,7 @@ func messageCreate(session *discordgo.Session, message *discordgo.MessageCreate)
 func refresh(client *discordgo.Session) {
 	if len(conf.Session.Guilds) == 0 {
 		for index, guild := range client.State.Guilds {
-			appendGuild := Guild{guild.ID, guild.Name, nil}
+			appendGuild := Guild{guild.ID, guild.Name, "p!", false, nil}
 			conf.Session.Guilds = append(conf.Session.Guilds, appendGuild)
 			for _, channel := range guild.Channels {
 				appendChannel := Channel{channel.ID, channel.Name, false}
@@ -287,6 +286,8 @@ type State struct {
 type Guild struct {
 	ID       string
 	Name     string
+	Prefix   string
+	Enabled  bool
 	Channels []Channel
 }
 
