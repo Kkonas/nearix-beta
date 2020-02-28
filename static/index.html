@@ -1,28 +1,47 @@
 <!DOCTYPE html>
 <head>
+    <meta charset="UTF-8">
+    <script src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
     <link href="styles/css/default.css" rel="stylesheet" type="text/css">
     <title>Nearix</title>
+    <!-- Begin manual jQuery scripts -->
+    <script>
+    </script>
 </head>
+    <link rel="icon" href="images/logo.png">
+
 <body>
-  <div class="topnav">
-    <a></a>
-    <a href="https://discord.gg/S54EKpt">Discord</a>
-    <a href="https://github.com/joker-ware/JokerCord">Github</a>
+  <!-- Left side wrapper -->
+    <div class="sidebar">
+      <section class="nearixlogo">
+
+        <img src="images/logo.png" id="nearixlogo"width="32" height="32"><h1>Nearix</h1>
+      </section>
+      <!-- TODO SECTION -->
+      <!---->
+      <button id="sidebarButtonDashboard">Dashboard</button>
+      <button id="sidebarButtonSettings">Settings</button>
+      <button id="sidebarButtonQuickReboot">Quick Reboot</button>
+      <button id="sidebarButtonBotReset">Bot Reset</button>
+      <button id="sidebarButtonLogout">Logout</button>
+    </div>
+
+  <!-- Right side wrapper -->
+    <!-- Top navigation bar -->
+  <div class="rightContainer">
+    <header>
+          <a href="https://discord.gg/S54EKpt" style="color: blue;">Discord</a> 
+    </header>
+
+
+    <!-- Main content container -->
+    <div id="mainContainer" class="container">
+      <main>
+        Main
+      </main>
+      <section>
+        Content
+      </section>
+    </div>
   </div>
-    <div id="mySidenav" class="sidenav">
-        <p id="navText">JokerHammer</p>
-        <p id="navText">User</p>
-        <button onclick="window.location.href = 'test.html';" type="submit" class="btn btn-primary"id="dashboardbtn">Dashboard</button>
-        <button onclick="window.location.href = 'test.html';" type="submit" class="btn btn-primary" id="settingsbtn">Settings</button>
-        <div id="sidenavBottomButtons">
-          <button onclick="window.location.href = 'test.html';" type="submit" class="btn btn-primary" id="quickRebootbtn">Quick Reboot</button>
-          <button onclick="window.location.href = 'test.html';" type="submit" class="btn btn-primary" id="botResetbtn">Bot Reset</button>
-          <button onclick="window.location.href = 'test.html';" type="submit" class="btn btn-primary" id="logoutbtn">Logout</button>
-        </div>
-      </div>
-      
-      <!-- Add all page content inside this div if you want the side nav to push page content to the right (not used if you only want the sidenav to sit on top of the page -->
-      <div id="main">
-        ...
-      </div>     
 </body>

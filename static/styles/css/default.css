@@ -1,100 +1,135 @@
+
 body {
-	background-color: black;
+	margin: 0;
+	background: #e0e0e0;
 }
-/* top bar */
-.topnav {
-	background-color: #333;
-	overflow: hidden;
-	margin-top: -7px;
-	margin-left: 150px;
-}
-
-.topnav a {
-	float: left;
-	color: #f2f2f2;
-	text-align: center;
-	padding: 14px 5px;
-	text-decoration: none;
-	font-size: 17px;
-}
-
-.topnav a:hover {
-	background-color: #ddd;
-	color: black;
-}
-
-.topnav a.active {
-	background-color: #4caf50;
-	color: white;
-}
-/* Sidenav */
-.sidenav {
-	height: 100%;
-	width: 160px;
+.sidebar {
 	position: fixed;
-	z-index: 1;
-	top: 0;
-	left: 0;
-	background-color: #111;
-	overflow-x: hidden;
-	padding-top: 20px;
+	background: #212121;
+	height: 100%;
+	width: 25%;
+	margin: 0px;
+	padding: 0px;
+	text-align: center;
 }
 
-.sidenav a {
-	padding: 6px 8px 6px 16px;
-	text-decoration: none;
-	font-size: 25px;
-	color: #818181;
+.sidebar .nearixlogo{
+	color: white;
+	height: 5%;
+	border-bottom: 2px solid #424242;
+}
+
+.sidebar .nearixlogo #nearixlogo {
+	float: left;
+	padding-right: 2%;
+}
+
+#sidebarButtonDashboard {
 	display: block;
-}
-
-.sidenav a:hover {
-	color: #f1f1f1;
-}
-
-#navText {
 	color: white;
-}
-
-/* buttons */
-.btn {
-	margin: 0 0 15px 20px;
-	width: 120px;
-	height: 30px;
-	color: white;
-	font-weight: 600;
-	box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.24),
-		0 12px 25px 0 rgba(0, 0, 0, 0.19);
-	cursor: pointer;
-	outline: none;
+	border-radius: 3px;
+	margin-top: 10%;
+	width: 100%;
 	border: none;
+	background-color: #424242;
+	padding: 14px 28px;
+	font-size: 16px;
+	cursor: pointer;
+	text-align: center;	
 }
 
-.btn:hover {
-	box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24),
-		0 17px 50px 0 rgba(0, 0, 0, 0.19);
+#sidebarButtonSettings {
+	display: block;
+	color: white;
+	border-radius: 3px;
+	margin-top: 5%;
+	width: 100%;
+	border: none;
+	background-color: #03a9f4;
+	padding: 14px 28px;
+	font-size: 16px;
+	cursor: pointer;
+	text-align: center;	
 }
 
-#sidenavBottomButtons {
-	padding-top: 100px;
+#sidebarButtonQuickReboot {
+	display: block;
+	color: white;
+	border-radius: 3px;
+	margin-top: 30%;
+	width: 100%;
+	border: none;
+	background-color: #64dd17;
+	padding: 14px 28px;
+	font-size: 16px;
+	cursor: pointer;
+	text-align: center;	
 }
 
-#dashboardbtn {
-	background-color: gray;
+#sidebarButtonBotReset {
+	display: block;
+	color: white;
+	border-radius: 3px;
+	margin-top: 5%;
+	width: 100%;
+	border: none;
+	background-color: #ffb300;
+	padding: 14px 28px;
+	font-size: 16px;
+	cursor: pointer;
+	text-align: center;	
 }
 
-#settingsbtn {
-	background-color: blue;
+#sidebarButtonLogout {
+	display: block;
+	color: white;
+	border-radius: 3px;
+	margin-top: 5%;
+	width: 100%;
+	border: none;
+	background-color: #dd2c00;
+	padding: 14px 28px;
+	font-size: 16px;
+	cursor: pointer;
+	text-align: center;	
+}
+.rightContainer {
+	width: 75%;
+	float: right;
 }
 
-#quickRebootbtn {
-	background-color: #4caf50;
+
+header {
+	position: fixed;
+	text-align: center;
+	background: white;
+	width: 100%;	
+	height: 5%; 
+}
+header a {
+	float: left;
 }
 
-#botResetbtn {
-	background-color: orange;
+.container {
+	margin-top: 100px; 
+	display:flex;
+	flex-flow: row wrap;
 }
 
-#logoutbtn {
-	background-color: red;
+main {
+  height: 400px;
+  order: 1;
+  flex: 0 1 100%; 
+}
+
+section {
+   height: 400px;
+   order: 2;
+   flex: 0 1 100%;
+}
+
+footer {
+  height: 100px;
+  order: 3;
+  flex: 0 1 100%;
 }
