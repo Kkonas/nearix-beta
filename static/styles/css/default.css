@@ -1,4 +1,9 @@
 
+@font-face {
+	font-family: "Arista";
+	src: url(fonts/Arista2.0.ttf);
+}
+
 body {
 	margin: 0;
 	background: #e0e0e0;
@@ -6,11 +11,11 @@ body {
 .sidebar {
 	position: fixed;
 	background: #212121;
+	text-align: center;
 	height: 100%;
 	width: 25%;
 	margin: 0px;
 	padding: 0px;
-	text-align: center;
 }
 
 .sidebar .nearixlogo{
@@ -25,25 +30,24 @@ body {
 }
 
 #sidebarButtonDashboard {
-	display: block;
 	color: white;
-	border-radius: 3px;
+	display: inline-block;
+	border-radius: 5px;
 	margin-top: 10%;
-	width: 100%;
+	width: 80%;
 	border: none;
 	background-color: #424242;
 	padding: 14px 28px;
 	font-size: 16px;
 	cursor: pointer;
-	text-align: center;	
 }
 
 #sidebarButtonSettings {
-	display: block;
+	display: inline-block;
 	color: white;
-	border-radius: 3px;
+	border-radius: 5px;
 	margin-top: 5%;
-	width: 100%;
+	width: 80%;
 	border: none;
 	background-color: #03a9f4;
 	padding: 14px 28px;
@@ -53,11 +57,11 @@ body {
 }
 
 #sidebarButtonQuickReboot {
-	display: block;
+	display: inline-block;
 	color: white;
-	border-radius: 3px;
+	border-radius: 5px;
 	margin-top: 30%;
-	width: 100%;
+	width: 80%;
 	border: none;
 	background-color: #64dd17;
 	padding: 14px 28px;
@@ -67,11 +71,11 @@ body {
 }
 
 #sidebarButtonBotReset {
-	display: block;
+	display: inline-block;
 	color: white;
-	border-radius: 3px;
+	border-radius: 5px;
 	margin-top: 5%;
-	width: 100%;
+	width: 80%;
 	border: none;
 	background-color: #ffb300;
 	padding: 14px 28px;
@@ -81,11 +85,11 @@ body {
 }
 
 #sidebarButtonLogout {
-	display: block;
+	display: inline-block;
 	color: white;
-	border-radius: 3px;
+	border-radius: 5px;
 	margin-top: 5%;
-	width: 100%;
+	width: 80%;
 	border: none;
 	background-color: #dd2c00;
 	padding: 14px 28px;
@@ -103,33 +107,36 @@ header {
 	position: fixed;
 	text-align: center;
 	background: white;
-	width: 100%;	
-	height: 5%; 
+	width: 80%;	
+	height: 7%; 
 }
 header a {
 	float: left;
+	font-family: "Arista";
+	text-shadow: 1px 1px blue;
 }
 
 .container {
-	margin-top: 100px; 
+	margin-top: 80px; 
 	display:flex;
 	flex-flow: row wrap;
 }
 
-main {
-  height: 400px;
-  order: 1;
-  flex: 0 1 100%; 
+.container #token {
+	display: flex;
+  	height: 400px;
+  	order: 1;
+  	flex: 0 1 80%; 
 }
 
 section {
    height: 400px;
    order: 2;
-   flex: 0 1 100%;
+   flex: 0 1 80%;
 }
 
 footer {
-  height: 100px;
+  height: 80px;
   order: 3;
-  flex: 0 1 100%;
+  flex: 0 1 80%;
 }

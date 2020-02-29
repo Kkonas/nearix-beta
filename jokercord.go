@@ -201,7 +201,7 @@ func readStdin() string {
 	return strings.Replace(raw, "\n", "", 1)
 }
 
-// messageCreate creates message for Catching
+// messageCreate receives a message handler from discord, then gets the pokemon
 func messageCreate(session *discordgo.Session, message *discordgo.MessageCreate) {
 	if message.Author.ID == conf.Constants.PokeCordID {
 		if message.Embeds != nil {
