@@ -53,13 +53,13 @@ languages:
                 greeting: "Καλώς ήλθατε στο JokerCord v2 SelfBot."
                 emptytoken: "Your token is empty."
         "RU":
-                greeting: Здраствуйте! Добро пожаловать в бот JokerCord V2 Selfbot
-                emplytoken: ваш токен пуст
-                running: JokerCord подключен и работает
-                error: произошла ошибка
-                tokenprompt: пожалуйста, введите свой токен:
-                tokenerror: похоже ваш токен неверен
-                fileerror: файл не может быть загружен!              
+                greeting: "Здраствуйте! Добро пожаловать в бот JokerCord V2 Selfbot"
+                emptytoken: "ваш токен пуст"
+                running: "JokerCord подключен и работает"
+                error: "произошла ошибка"
+                tokenprompt: "пожалуйста, введите свой токен:"
+                tokenerror: "похоже ваш токен неверен"
+                fileerror: "файл не может быть загружен!"            
         "HI":
                 greeting: "Swagat hai apka JokerCord v2 svayang bot mein."
                 emptytoken: "apka Token khalee hai."

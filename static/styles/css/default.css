@@ -10,6 +10,7 @@
 body {
 	margin: 0;
 	font-family: "Arista";
+	font-weight: bolder;
 	background: #e0e0e0;
 }
 .sidebar {
@@ -30,7 +31,7 @@ body {
 
 .nearixlogo img {
 	height: 100%;
-	width: auto;
+	width: 100%;
 }
 
 .sidebar .nearixlogo #nearixlogo {
@@ -134,10 +135,12 @@ header a {
 .container {
 	margin-top: 8%;
 	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
 }
 
-.container .token {
-	display: flex;
+.token {
 	background: white;
 	border: 1px solid #c1c1c1;
 	margin-top: 3%;
@@ -147,15 +150,14 @@ header a {
 	height: 2em;
 }
 
-.container .entries {
-	display: flex;
+.entries {
 	background: white;
 	border: 1px solid #c1c1c1;
 	margin-top: 1px;
 	margin-left: 3%;
 	margin-right: 3%;
 	margin-bottom: 1%;
-	height: 15em;	
+	height: 10em;
 }
 
 .sectionName {
@@ -166,7 +168,7 @@ header a {
 
 .flex-container {
 	display: flex;
-	height: 100%;
+	flex: 2;
 	margin-top: 3%;
 	margin-left: 3%;
 	margin-right: 3%;
@@ -207,12 +209,6 @@ header a {
 	margin-left: 1px;
 	margin-right: 1px;
 	margin-bottom: 2%;
-}
-
-section {
-   height: 400px;
-   order: 2;
-   flex: 0 1 80%;
 }
 
 footer {
