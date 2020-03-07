@@ -6,6 +6,9 @@
     <title>Nearix</title>
     <!-- Begin manual jQuery scripts -->
     <script>
+      function test() {
+       console.log("test") 
+      }
     </script>
 </head>
     <link rel="icon" href="images/logo.png">
@@ -16,13 +19,13 @@
       <section class="nearixlogo">
         <img src="images/logofull.png">
       </section>
-      <section id="user"class="nearixlogo">
-       {{.UserName}} 
+      <section id="user">
+       <img class="userAvatar" src="{{.ImageURL}}">{{.UserName}}#{{.Discriminator}} 
       </section>
       <!-- TODO SECTION -->
       <!---->
       <button id="sidebarButtonDashboard" class="Arista">Dashboard</button>
-      <button id="sidebarButtonSettings" class="Arista">Settings</button>
+      <button id="sidebarButtonSettings" href="/settings" class="Arista">Settings</button>
       <button id="sidebarButtonQuickReboot" class="Arista">Quick Reboot</button>
       <button id="sidebarButtonBotReset" class="Arista">Bot Reset</button>
       <button id="sidebarButtonLogout" class="Arista">Logout</button>
@@ -55,16 +58,31 @@
       <div class="flex-container">
         <div class="catchList">
           <section class="sectionName">
-            Custom catch list
+            Custom catch list <input type="text" onclick="test()" placeholder="Search Pokemon">
           </section>
         </div>
         <div class="guilds">
           <section class="sectionName">
+
+
+
+
             Guilds
           </section>
+          {{range $index,$guild := .Guilds}}
+          <p>
+            {{$guild.Name}}
+              {{if $guild.IsEnabled}}
+              TRUE 
+              {{else}}
+              FALSE
+              {{end}}
+          </p>
+          {{end}}
         </div>
         <div class="chatSpammer">
           <section class="sectionName">
+
             Chat Spammer
           </section>
         </div>

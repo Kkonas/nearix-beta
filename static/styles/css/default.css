@@ -10,13 +10,13 @@
 body {
 	margin: 0;
 	font-family: "Arista";
-	font-weight: bolder;
 	background: #e0e0e0;
 }
 .sidebar {
 	position: fixed;
 	background: #212121;
 	text-align: center;
+	font-family: "HelveticaNeue-Light";
 	height: 100%;
 	width: 20%;
 	margin: 0px;
@@ -25,8 +25,21 @@ body {
 
 .nearixlogo {
 	color: white;
-	height: 5%;
+	height: 7%;
 	border-bottom: 2px solid #424242;
+}
+#user {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 7%;
+	color: white;
+	border-bottom: 1px solid #424242;
+}
+
+.userAvatar {
+	height: 100%;
+	width: auto;
 }
 
 .nearixlogo img {
@@ -41,6 +54,7 @@ body {
 
 #sidebarButtonDashboard {
 	color: white;
+	font-family: "HelveticaNeue-Ligth";
 	display: inline-block;
 	border-radius: 5px;
 	margin: 10%;
@@ -56,6 +70,7 @@ body {
 
 #sidebarButtonSettings {
 	display: inline-block;
+	font-family: "HelveticaNeue-Ligth";
 	color: white;
 	border-radius: 5px;
 	margin-top: 5%;
@@ -70,6 +85,7 @@ body {
 
 #sidebarButtonQuickReboot {
 	display: inline-block;
+	font-family: "HelveticaNeue-Ligth";
 	color: white;
 	border-radius: 5px;
 	margin-top: 30%;
@@ -84,6 +100,7 @@ body {
 
 #sidebarButtonBotReset {
 	display: inline-block;
+	font-family: "HelveticaNeue-Ligth";
 	color: white;
 	border-radius: 5px;
 	margin-top: 5%;
@@ -98,6 +115,7 @@ body {
 
 #sidebarButtonLogout {
 	display: inline-block;
+	font-family: "HelveticaNeue-Ligth";
 	color: white;
 	border-radius: 5px;
 	margin-top: 5%;
@@ -118,6 +136,8 @@ body {
 
 
 header {
+	display: flex;
+	align-items: center;
 	position: fixed;
 	text-align: center;
 	background: white;
@@ -128,8 +148,8 @@ header {
 header a {
 	float: left;
 	font-family: "Arista";
-	font-size: 1em;
-	text-shadow: 1px 1px blue;
+	font-size: 2em;
+	font-weight: 900;
 }
 
 .container {
@@ -169,7 +189,7 @@ header a {
 .flex-container {
 	display: flex;
 	flex: 2;
-	margin-top: 3%;
+	margin-top: 1%;
 	margin-left: 3%;
 	margin-right: 3%;
 	margin-bottom: 1%;	

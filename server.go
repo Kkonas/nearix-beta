@@ -10,6 +10,13 @@ import (
 type User struct {
 	UserName      string
 	Discriminator string
+	ImageURL      string
+	Guilds        []UserGuild
+}
+
+type UserGuild struct {
+	Name      string
+	IsEnabled bool
 }
 
 // ENDOF Structs
@@ -17,14 +24,20 @@ type User struct {
 // BEGIN Handlers
 func (user *User) indexHandler(writer http.ResponseWriter, request *http.Request) {
 	baseTemplate, _ := template.ParseFiles("./static/index.html")
-	UserName := user.UserName
-	baseTemplate.Execute(writer, UserName)
+	baseTemplate.Execute(writer, user)
 }
 
 // Start works calling the ListenAndServe as a GoRoutine (non-blocking call).
 func Start() {
 	userInfo, _ := client.User("@me")
-	user := &User{UserName: userInfo.Username, Discriminator: userInfo.Discriminator}
+	var userGuilds []UserGuild
+	for _, guild := range client.State.Guilds {
+		var appendGuild UserGuild
+		appendGuild.Name = guild.Name
+		appendGuild.IsEnabled = false
+		userGuilds = append(userGuilds, appendGuild)
+	}
+	user := &User{UserName: userInfo.Username, Discriminator: userInfo.Discriminator, ImageURL: userInfo.AvatarURL(""), Guilds: userGuilds}
 	http.Handle("/", http.FileServer(http.Dir("./static/")))
 	http.HandleFunc("/settings", user.indexHandler)
 	err := http.ListenAndServe(":9898", nil)

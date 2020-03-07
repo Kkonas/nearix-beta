@@ -4,12 +4,14 @@
 package main
 
 import (
-	"crypto/md5"
-	"encoding/hex"
+	"image"
 	"io"
 	"io/ioutil"
+	"log"
 	"net/http"
 	"os"
+
+	"github.com/corona10/goimagehash"
 
 	"gopkg.in/yaml.v2"
 )
@@ -20,14 +22,13 @@ import (
 // BEGIN function definition
 // receive grabs url of Pokemon picture
 func receive(url string) string {
-	pokemons := make(map[string]string)
+	// pokemons := make(map[string]string)
 	err := Download("images/template.jpg", url)
 	logErr(err)
 	hash := Hash("images/template.jpg")
-	hashHex := hex.EncodeToString(hash)
-	readPokemonList(pokemons)
-	pokemonName := Compare(hashHex, pokemons)
-	return (pokemonName)
+	// readPokemonList(pokemons)
+	// pokemonName := Compare(hashHex, pokemons)
+	return (hash)
 }
 
 // Download grabs Pokemon Picture from recieve url
@@ -73,16 +74,18 @@ func Compare(hash string, pokemonStruct map[string]string) string {
 }
 
 // Hash grabs value from Download
-func Hash(path string) []byte {
-	output, err := ioutil.ReadFile(path)
+func Hash(path string) string {
+	output, err := os.Open(path)
 	logErr(err)
-	hash := md5.New()
-	hash.Write(output)
-	hashSum := hash.Sum(nil)
-	hexEncoded := make([]byte, hex.EncodedLen(len(hashSum)))
-	hex.Encode(hexEncoded, hashSum)
-
-	return hexEncoded
+	imageFile, _, err := image.Decode(output)
+	if err != nil {
+		log.Panic("Couldn't read image file")
+	}
+	hash, err := goimagehash.PerceptionHash(imageFile)
+	if err != nil {
+		log.Panic("Couldn't get hash")
+	}
+	return hash.ToString()
 }
 
 // ENDOF function definition

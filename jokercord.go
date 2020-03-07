@@ -325,6 +325,8 @@ var client *discordgo.Session
 
 // ENDOF GLOBAL values
 func main() {
+	fmt.Println(receive("https://media.discordapp.net/attachments/685547982757822464/685596884043431945/toxapexspawn.jpg"))
+	fmt.Println(receive("https://media.discordapp.net/attachments/685547982757822464/685596909162725427/toxapexdex.png"))
 	go Start()
 	fmt.Printf("Token: %s, Version: %s, ID: %s\n", conf.Token, conf.Version, conf.Constants.PokeCordID)
 	fmt.Println(lang.Languages[conf.Constants.Language]["running"])
