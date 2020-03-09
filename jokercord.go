@@ -210,7 +210,13 @@ func messageCreate(session *discordgo.Session, message *discordgo.MessageCreate)
 				if embed.Image != nil {
 					pokename := receive(embed.Image.URL)
 					time.Sleep(time.Duration(genRandNum(3, 7)) * time.Second)
-					if pokename != "" {
+					var shouldCatch bool
+					for _, guild := range conf.Session.Guilds {
+						if guild.ID == message.GuildID && guild.Enabled {
+							shouldCatch = true
+						}
+					}
+					if pokename != "" && shouldCatch {
 						session.ChannelMessageSend(message.ChannelID, "p!catch "+pokename)
 					}
 				}
@@ -226,7 +232,7 @@ func refresh(client *discordgo.Session) {
 			appendGuild := Guild{guild.ID, guild.Name, "p!", false, nil}
 			conf.Session.Guilds = append(conf.Session.Guilds, appendGuild)
 			for _, channel := range guild.Channels {
-				appendChannel := Channel{channel.ID, channel.Name, false}
+				appendChannel := Channel{channel.ID, channel.Name, 5, false}
 				conf.Session.Guilds[index].Channels = append(conf.Session.Guilds[index].Channels, appendChannel)
 			}
 		}
@@ -237,6 +243,7 @@ func refresh(client *discordgo.Session) {
 }
 func updateConfigYaml() {
 	writeConfigYaml("config/config.yaml", &conf)
+	defer readConfigYaml("config/config.yaml", &conf)
 }
 func init() {
 	var err error
@@ -312,6 +319,7 @@ type Guild struct {
 type Channel struct {
 	ID      string
 	Name    string
+	Delay   int
 	Enabled bool
 }
 
@@ -325,8 +333,6 @@ var client *discordgo.Session
 
 // ENDOF GLOBAL values
 func main() {
-	fmt.Println(receive("https://media.discordapp.net/attachments/685547982757822464/685596884043431945/toxapexspawn.jpg"))
-	fmt.Println(receive("https://media.discordapp.net/attachments/685547982757822464/685596909162725427/toxapexdex.png"))
 	go Start()
 	fmt.Printf("Token: %s, Version: %s, ID: %s\n", conf.Token, conf.Version, conf.Constants.PokeCordID)
 	fmt.Println(lang.Languages[conf.Constants.Language]["running"])

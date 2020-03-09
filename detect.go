@@ -10,6 +10,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strings"
 
 	"github.com/corona10/goimagehash"
 
@@ -22,13 +23,13 @@ import (
 // BEGIN function definition
 // receive grabs url of Pokemon picture
 func receive(url string) string {
-	// pokemons := make(map[string]string)
+	pokemons := make(map[string]string)
 	err := Download("images/template.jpg", url)
 	logErr(err)
 	hash := Hash("images/template.jpg")
-	// readPokemonList(pokemons)
-	// pokemonName := Compare(hashHex, pokemons)
-	return (hash)
+	readPokemonList(pokemons)
+	pokemonName := Compare(hash, pokemons)
+	return (pokemonName)
 }
 
 // Download grabs Pokemon Picture from recieve url
@@ -64,6 +65,7 @@ func readPokemonList(pokemonStruct map[string]string) {
 // Compare checks hash to hash list
 func Compare(hash string, pokemonStruct map[string]string) string {
 	var name string
+	hash = strings.Replace(hash, "p:", "", 1)
 	for pokemon, pokemonHash := range pokemonStruct {
 		if pokemonHash == hash {
 			name = pokemon

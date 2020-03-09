@@ -24,11 +24,23 @@
       </section>
       <!-- TODO SECTION -->
       <!---->
-      <button id="sidebarButtonDashboard" class="Arista">Dashboard</button>
-      <button id="sidebarButtonSettings" href="/settings" class="Arista">Settings</button>
-      <button id="sidebarButtonQuickReboot" class="Arista">Quick Reboot</button>
-      <button id="sidebarButtonBotReset" class="Arista">Bot Reset</button>
-      <button id="sidebarButtonLogout" class="Arista">Logout</button>
+      <form action="/dashboard">
+        <button type="submit" id="sidebarButtonDashboard" class="Arista">Dashboard</button>
+      </form>
+      <form action="/settings">
+
+        <button type="submit" id="sidebarButtonSettings" class="Arista">Settings</button>
+      </form>
+      <form action="reboot">
+        <button id="sidebarButtonQuickReboot" class="Arista">Quick Reboot</button>
+      </form>
+      <form action="reset">
+        <button id="sidebarButtonBotReset" class="Arista">Bot Reset</button>
+      </form>
+      <form action="logout">
+
+        <button id="sidebarButtonLogout" class="Arista">Logout</button>
+      </form>
     </div>
 
 <!-- Right side wrapper -->
@@ -46,13 +58,54 @@
     <div id="mainContainer" class="container">
       <div class="token">
         <section>
-          Insert your token hereeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+          <table>
+            <tr>
+              <th>
+                <a>Insert your token here:</a>
+          </th>
+          <th>
+            <input type="text" placeholder="Insert your token">
+          </th>
+          </tr>
+
+          </table>
+
         </section>
+
       </div>
       <div class="entries">
-        <section>
-        Entries
-        </section>
+        <table>
+          <tr>
+          <th>
+          Token
+          </th>
+          <th>
+            Name
+          </th>
+          <th>
+            Caught
+          </th>
+          <th>
+
+            Sent
+          </th>
+          </tr>
+        <tr>
+          <th>
+          {{.Token}}
+        </th>
+        <th>
+          {{.UserName}}#{{.Discriminator}}
+        </th>
+      <th>
+        Caught
+      </th>
+      <th>
+        Sent
+      </th>
+      </tr>
+      </table>
+
       </div>
     <!-- BEGIN horizontal sections -->
       <div class="flex-container">
@@ -63,32 +116,61 @@
         </div>
         <div class="guilds">
           <section class="sectionName">
-
-
-
-
             Guilds
           </section>
+          <table>
           {{range $index,$guild := .Guilds}}
-          <p>
-            {{$guild.Name}}
-              {{if $guild.IsEnabled}}
-              TRUE 
+          <tr> 
+            <div style="float: left;">
+
+
+            <th>{{$guild.Name}}</th>
+            </div>
+              {{if $guild.Enabled}}
+                <th><input type="text" placeholder="5"><a href="/bin?command=changeGuildState&id={{$guild.ID}}"><button class="guildButton" style="color:white; background:#27df5b;">Enabled</button></a></th>
               {{else}}
-              FALSE
+                <th><input type="text" placeholder="5"><a href="/bin?command=changeGuildState&id={{$guild.ID}}"><button class="guildButton" style="color:white; background:#ff3e3e;">Disabled</button></a></th>
               {{end}}
-          </p>
+          </tr>
           {{end}}
+          </table>
         </div>
         <div class="chatSpammer">
           <section class="sectionName">
 
             Chat Spammer
           </section>
+          <table>
+            {{range $index,$guild := .Guilds}}
+            <tr>
+             <th>{{$guild.Name}}</th>
+
+             <th>
+             <div id="channelsInner">
+              {{range $index,$channel := $guild.Channels}}
+                <div>
+                  {{if $channel.Enabled}}
+                    green|{{$channel.Name}}:{{$channel.Delay}}
+                  {{else}}
+                    red|{{$channel.Name}}:{{$channel.Delay}}
+                  {{end}}
+                </div>
+
+              {{end}}
+              </th>
+            </div>
+
+              </div>
+            {{end}}
+            </tr>
+          </table>
         </div>
       </div>
     </div>
     <!-- ENDOF horizontal sections -->
     <!-- ENDOF main content container -->
+    <div id="footer">
+          <a href="https://github.com/joker-ware" style="color: blue;">Copyright joker-ware</a> 
+    </div>
 </div>
 </body>
