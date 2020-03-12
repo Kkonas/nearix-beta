@@ -210,13 +210,19 @@ func messageCreate(session *discordgo.Session, message *discordgo.MessageCreate)
 				if embed.Image != nil {
 					pokename := receive(embed.Image.URL)
 					time.Sleep(time.Duration(genRandNum(3, 7)) * time.Second)
-					var shouldCatch bool
+					var shouldCatch struct {
+						should bool
+						delay  int
+					}
+
 					for _, guild := range conf.Session.Guilds {
 						if guild.ID == message.GuildID && guild.Enabled {
-							shouldCatch = true
+							shouldCatch.should = true
+							shouldCatch.delay = guild.Delay
 						}
 					}
-					if pokename != "" && shouldCatch {
+					if pokename != "" && shouldCatch.should {
+						time.Sleep(time.Duration(shouldCatch.delay) * time.Second)
 						session.ChannelMessageSend(message.ChannelID, "p!catch "+pokename)
 					}
 				}
@@ -229,9 +235,12 @@ func messageCreate(session *discordgo.Session, message *discordgo.MessageCreate)
 func refresh(client *discordgo.Session) {
 	if len(conf.Session.Guilds) == 0 {
 		for index, guild := range client.State.Guilds {
-			appendGuild := Guild{guild.ID, guild.Name, "p!", false, nil}
+			appendGuild := Guild{guild.ID, guild.Name, "p!", 5, false, nil}
 			conf.Session.Guilds = append(conf.Session.Guilds, appendGuild)
 			for _, channel := range guild.Channels {
+				if channel.Type == discordgo.ChannelTypeGuildCategory || channel.Type == discordgo.ChannelTypeGuildVoice {
+					continue
+				}
 				appendChannel := Channel{channel.ID, channel.Name, 5, false}
 				conf.Session.Guilds[index].Channels = append(conf.Session.Guilds[index].Channels, appendChannel)
 			}
@@ -275,6 +284,24 @@ func init() {
 	} else {
 		err = client.Open()
 	}
+	var totalChannels []struct {
+		ID    string
+		Delay int
+	}
+	for _, guild := range conf.Session.Guilds {
+		for _, channel := range guild.Channels {
+			if channel.Enabled {
+				var appendChannel struct {
+					ID    string
+					Delay int
+				}
+				appendChannel.ID = channel.ID
+				appendChannel.Delay = channel.Delay
+				totalChannels = append(totalChannels, appendChannel)
+			}
+		}
+	}
+	spam = &SpamInstance{Channel: totalChannels}
 }
 
 // ENDOF function declaration section
@@ -311,6 +338,7 @@ type Guild struct {
 	ID       string
 	Name     string
 	Prefix   string
+	Delay    int
 	Enabled  bool
 	Channels []Channel
 }
@@ -330,14 +358,18 @@ type Channel struct {
 var lang LangConfig
 var conf Config
 var client *discordgo.Session
+var spam *SpamInstance
 
 // ENDOF GLOBAL values
 func main() {
 	go Start()
+	spam.Invoke()
 	fmt.Printf("Token: %s, Version: %s, ID: %s\n", conf.Token, conf.Version, conf.Constants.PokeCordID)
 	fmt.Println(lang.Languages[conf.Constants.Language]["running"])
 	user, _ := client.User("@me")
 	fmt.Println(Lang("welcome") + user.Username + "#" + user.Discriminator + "!")
+	fmt.Println("The bot is ready. Please visit http://localhost:9898/settings for config")
+	fmt.Print("[LOGS]\n\n")
 	sc := make(chan os.Signal, 1)
 	signal.Notify(sc, syscall.SIGINT, syscall.SIGTERM, os.Interrupt, os.Kill)
 	<-sc

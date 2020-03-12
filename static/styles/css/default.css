@@ -260,7 +260,7 @@ th {
 
 #channelsInner {
 	display: flex;
-	overflow-y: scroll;
+	align-items: flex-start;
 	flex-direction: column;
 	justify-content: left;
 }

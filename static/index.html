@@ -6,8 +6,13 @@
     <title>Nearix</title>
     <!-- Begin manual jQuery scripts -->
     <script>
-      function test() {
-       console.log("test") 
+      function addToken() {
+        var token = document.getElementById("tokenEntry").value;
+        window.location.href = "/test"+token;
+      }
+      function changeDelay(guildId) {
+        var delay = document.getElementById("guildDelay_"+guildId).value;
+        window.location.href = "/bin?command=changeGuildDelay&guildid="+guildId+"&delay="+delay;
       }
     </script>
 </head>
@@ -64,7 +69,11 @@
                 <a>Insert your token here:</a>
           </th>
           <th>
-            <input type="text" placeholder="Insert your token">
+
+            <input type="text" id="tokenEntry" placeholder="Work in progress...">
+          </th>
+          <th>
+            <button id="tokenSubmit" onclick="addToken()">Enter</button>
           </th>
           </tr>
 
@@ -111,7 +120,7 @@
       <div class="flex-container">
         <div class="catchList">
           <section class="sectionName">
-            Custom catch list <input type="text" onclick="test()" placeholder="Search Pokemon">
+            Custom catch list <input type="text" placeholder="Search Pokemon">
           </section>
         </div>
         <div class="guilds">
@@ -127,9 +136,9 @@
             <th>{{$guild.Name}}</th>
             </div>
               {{if $guild.Enabled}}
-                <th><input type="text" placeholder="5"><a href="/bin?command=changeGuildState&id={{$guild.ID}}"><button class="guildButton" style="color:white; background:#27df5b;">Enabled</button></a></th>
+                <th><input type="text" id="guildDelay_{{$guild.ID}}" placeholder="{{$guild.Delay}}"><a href="/bin?command=changeGuildState&id={{$guild.ID}}"><button class="guildButton" style="color:white; background:#27df5b;">Enabled</button></a><button onclick="changeDelay('{{$guild.ID}}')" class="guildButton">Submit</button></th>
               {{else}}
-                <th><input type="text" placeholder="5"><a href="/bin?command=changeGuildState&id={{$guild.ID}}"><button class="guildButton" style="color:white; background:#ff3e3e;">Disabled</button></a></th>
+                <th><input type="text" id="guildDelay_{{$guild.ID}}" placeholder="{{$guild.Delay}}"><a href="/bin?command=changeGuildState&id={{$guild.ID}}"><button class="guildButton" style="color:white; background:#ff3e3e;">Disabled</button></a><button onclick="changeDelay('{{$guild.ID}}')" class="guildButton">Submit</button></th>
               {{end}}
           </tr>
           {{end}}
@@ -138,7 +147,7 @@
         <div class="chatSpammer">
           <section class="sectionName">
 
-            Chat Spammer
+            Chat Spammer (Click on the square)
           </section>
           <table>
             {{range $index,$guild := .Guilds}}
@@ -150,9 +159,9 @@
               {{range $index,$channel := $guild.Channels}}
                 <div>
                   {{if $channel.Enabled}}
-                    green|{{$channel.Name}}:{{$channel.Delay}}
+                    <a href="/bin?command=changeChannelState&guildid={{$guild.ID}}&channelid={{$channel.ID}}"><img src="images/rectangle_green.png"></a>{{$channel.Name}}:{{$channel.Delay}}
                   {{else}}
-                    red|{{$channel.Name}}:{{$channel.Delay}}
+                    <a href="/bin?command=changeChannelState&guildid={{$guild.ID}}&channelid={{$channel.ID}}"><img src="images/rectangle_red.png"></a>{{$channel.Name}}:{{$channel.Delay}}
                   {{end}}
                 </div>
 

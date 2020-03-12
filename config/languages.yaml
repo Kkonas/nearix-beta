@@ -70,3 +70,13 @@ languages:
                 fileerror: "ek File load nehi kar sake."
                 welcome: "svaagat he, "
                 latestversion: "vartaman sanskaran naveentam hai."
+        "HE":
+                greeting: "ברוכים השבים ל-ג'וקרקורד v2."
+                emptytoken: "האסימון שלך ריק."
+                running: "ג'וקרקורד מחובר ופועל."
+                error: "יש שגיאה."
+                tokenprompt: "אנא הכנס את האסימון שלך."
+                tokenerror: "זה נראה כאילו האסימון שלך לא נכון."
+                fileerror: "נראה כאילו שהיה שגיאה ב-קובץ."
+                welcome: "ברוך הבא."
+                latestversion: "הגירסה הנוכחית היא החדשה ביותר."

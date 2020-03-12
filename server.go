@@ -22,6 +22,7 @@ type UserGuild struct {
 	ID       string
 	Enabled  bool
 	Prefix   string
+	Delay    int
 	Channels []Channel
 }
 
@@ -37,20 +38,56 @@ index page with a status of 302 (See https://en.wikipedia.org/wiki/List_of_HTTP_
 func binExecute(writer http.ResponseWriter, request *http.Request) {
 	request.ParseForm()
 	if request.Form["command"] != nil {
-		if request.Form["command"][0] == "refresh" {
+		if request.FormValue("command") == "refresh" {
 			refresh(client)
 			updateConfigYaml()
 			fmt.Println("Sucessfully refreshed")
-			http.Redirect(writer, request, "/settings", 302)
 		} else if request.Form["command"][0] == "changeGuildState" && request.Form["id"] != nil {
-			id := request.Form["id"][0]
+			id := request.FormValue("id")
 			var changedGuildSlice []Guild
 			for _, guild := range conf.Session.Guilds {
 				if guild.ID == id {
 					guild.Enabled = !guild.Enabled
 					changedGuildSlice = append(changedGuildSlice, guild)
-					fmt.Println("Server with ID: " + id + "'s state has been changed sucessfully to: " + strconv.FormatBool(guild.Enabled))
-					http.Redirect(writer, request, "/settings", 302)
+					fmt.Println("[GUILDS] Server with ID: " + id + "'s state has been changed sucessfully to: " + strconv.FormatBool(guild.Enabled))
+				} else {
+					changedGuildSlice = append(changedGuildSlice, guild)
+				}
+			}
+			conf.Session.Guilds = changedGuildSlice
+			updateConfigYaml()
+		} else if request.FormValue("command") == "changeChannelState" && request.Form["guildid"] != nil && request.Form["channelid"] != nil {
+			guildid := request.FormValue("guildid")
+			channelid := request.FormValue("channelid")
+			var changedGuildSlice []Guild
+			for _, parent := range conf.Session.Guilds {
+
+				if parent.ID == guildid {
+					var changedChannelSlice []Channel
+					for _, channel := range parent.Channels {
+						if channel.ID == channelid {
+							channel.Enabled = !channel.Enabled
+							changedChannelSlice = append(changedChannelSlice, channel)
+							fmt.Println("[CHANNELS] Channel with ID: " + channel.ID + "'s state was changed to: " + strconv.FormatBool(channel.Enabled))
+						} else {
+							changedChannelSlice = append(changedChannelSlice, channel)
+						}
+					}
+					parent.Channels = changedChannelSlice
+				}
+				changedGuildSlice = append(changedGuildSlice, parent)
+			}
+			conf.Session.Guilds = changedGuildSlice
+			updateConfigYaml()
+		} else if request.Form["command"][0] == "changeGuildDelay" && request.Form["guildid"] != nil && request.Form["delay"] != nil {
+			guildid := request.FormValue("guildid")
+			delay, _ := strconv.Atoi(request.FormValue("delay"))
+			var changedGuildSlice []Guild
+			for _, guild := range conf.Session.Guilds {
+				if guild.ID == guildid {
+					guild.Delay = delay
+					changedGuildSlice = append(changedGuildSlice, guild)
+					fmt.Println("[GUILDS] Guild with ID: " + guildid + "'s delay was changed to: " + strconv.Itoa(delay) + " s")
 				} else {
 					changedGuildSlice = append(changedGuildSlice, guild)
 				}
@@ -59,6 +96,7 @@ func binExecute(writer http.ResponseWriter, request *http.Request) {
 			updateConfigYaml()
 		}
 	}
+	http.Redirect(writer, request, "/settings", 302)
 }
 
 func (user *User) updateGuilds() {
@@ -69,6 +107,7 @@ func (user *User) updateGuilds() {
 		appendGuild.Enabled = guild.Enabled
 		appendGuild.ID = guild.ID
 		appendGuild.Prefix = guild.Prefix
+		appendGuild.Delay = guild.Delay
 		appendGuild.Channels = guild.Channels
 		userGuilds = append(userGuilds, appendGuild)
 	}
@@ -99,6 +138,7 @@ func Start() {
 		appendGuild.Enabled = guild.Enabled
 		appendGuild.ID = guild.ID
 		appendGuild.Prefix = guild.Prefix
+		appendGuild.Delay = guild.Delay
 		appendGuild.Channels = guild.Channels
 		userGuilds = append(userGuilds, appendGuild)
 	}
