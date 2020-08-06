@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <script src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <link href="styles/css/default.css" rel="stylesheet" type="text/css">
+    <title>Nearix</title>
+    <!-- Begin manual jQuery scripts -->
+    <script>
+      function addToken() {
+        var token = document.getElementById("tokenEntry").value;
+        window.location.href = "/test"+token;
+      }
+      function change(guildId) {
+        var delay = document.getElementById("guildDelay_"+guildId).value;
+        var prefix = document.getElementById("prefix_"+guildId).value;
+        if (prefix != null && delay != null) {
+          window.location.href = "/bin?command=changeGuild&guildid="+guildId+"&delay="+delay+"&prefix="+prefix;
+        } else if (delay != null && prefix == null){
+          window.location.href = "/bin?command=changeGuild&guildid="+guildId+"&delay="+delay+"&prefix="+document.getElementById("prefix_"+guildId).placeholder;
+        } else {
+          window.location.href = "/bin?command=changeGuild&guildid="+guildId+"&delay="+document.getElementById("guildDelay_"+guildId).placeholder+"&prefix="+prefix;
+        }
+      }
+    </script>
+</head>
+    <link rel="icon" href="images/logo.png">
+
+<body>
+  <!-- Left side wrapper -->
+    <div class="sidebar">
+      <section class="nearixlogo">
+        <img src="images/logofull.png">
+      </section>
+      <section id="user">
+       <img class="userAvatar" src="{{.ImageURL}}">{{.UserName}}#{{.Discriminator}} 
+      </section>
+      <!-- TODO SECTION -->
+      <!---->
+      <form action="/dashboard">
+        <button type="submit" id="sidebarButtonDashboard" class="Arista">Dashboard</button>
+      </form>
+      <form action="/settings">
+
+        <button type="submit" id="sidebarButtonSettings" class="Arista">Settings</button>
+      </form>
+      <form action="reboot">
+        <button id="sidebarButtonQuickReboot" class="Arista">Quick Reboot</button>
+      </form>
+      <form action="reset">
+        <button id="sidebarButtonBotReset" class="Arista">Bot Reset</button>
+      </form>
+      <form action="logout">
+
+        <button id="sidebarButtonLogout" class="Arista">Logout</button>
+      </form>
+    </div>
+
+<!-- Right side wrapper -->
+<div class="rightContainer">
+
+    <!-- BEGIN navbar -->
+    <div id="navbar">
+      <header>
+          <a href="https://discord.gg/S54EKpt" style="color: blue;">Discord</a> 
+          <a href="https://www.paypal.me/jokerware">  Donate!</a>
+      </header>
+    </div>
+    <!-- ENDOF navbar -->
+
+    <!-- BEGIN main content container -->
+    <div id="mainContainer" class="container">
+      <div class="token">
+        <section>
+          <table>
+            <tr>
+              <th>
+                <a>Insert your token here:</a>
+          </th>
+          <th>
+
+            <input type="text" id="tokenEntry" placeholder="Work in progress...">
+          </th>
+          <th>
+            <button id="tokenSubmit" onclick="addToken()">Enter</button>
+          </th>
+          </tr>
+
+          </table>
+
+        </section>
+
+      </div>
+      <div class="entries">
+        <table>
+          <tr>
+          <th>
+          Token
+          </th>
+          <th>
+            Name
+          </th>
+          <th>
+            Caught
+          </th>
+          <th>
+
+            Sent
+          </th>
+          </tr>
+        <tr>
+          <th>
+          {{.Token}}
+        </th>
+        <th>
+          {{.UserName}}#{{.Discriminator}}
+        </th>
+      <th>
+        Caught
+      </th>
+      <th>
+        Sent
+      </th>
+      </tr>
+      </table>
+
+      </div>
+    <!-- BEGIN horizontal sections -->
+      <div class="flex-container">
+        <div class="catchList">
+          <section class="sectionName">
+            Custom catch list <input type="text" placeholder="Search Pokemon">
+          </section>
+        </div>
+        <div class="guilds">
+          <section class="sectionName">
+            Guilds
+          </section>
+          <table>
+          {{range $index,$guild := .Guilds}}
+          <tr> 
+            <div style="float: left;">
+
+
+            <th>{{$guild.Name}}</th>
+            </div>
+              {{if $guild.Enabled}}
+                <th><input type="text" id="guildDelay_{{$guild.ID}}" placeholder="{{$guild.Delay}}"><input type="text" id="prefix_{{$guild.ID}}" placeholder="{{$guild.Prefix}}"></input><a href="/bin?command=changeGuildState&id={{$guild.ID}}"><button class="guildButton" style="color:white; background:#27df5b;">Enabled</button></a><button onclick="change('{{$guild.ID}}')" class="guildButton">Submit</button></th>
+              {{else}}
+                <th><input type="text" id="guildDelay_{{$guild.ID}}" placeholder="{{$guild.Delay}}"><input type="text" id="prefix_{{$guild.ID}}" placeholder="{{$guild.Prefix}}"></input><a href="/bin?command=changeGuildState&id={{$guild.ID}}"><button class="guildButton" style="color:white; background:#ff3e3e;">Disabled</button></a><button onclick="change('{{$guild.ID}}')" class="guildButton">Submit</button></th>
+              {{end}}
+          </tr>
+          {{end}}
+          </table>
+        </div>
+        <div class="chatSpammer">
+          <section class="sectionName">
+
+            Chat Spammer (Click on the square)
+          </section>
+          <table>
+            {{range $index,$guild := .Guilds}}
+            <tr>
+             <th>{{$guild.Name}}</th>
+
+             <th>
+             <div id="channelsInner">
+              {{range $index,$channel := $guild.Channels}}
+                <div>
+                  {{if $channel.Enabled}}
+                    <a href="/bin?command=changeChannelState&guildid={{$guild.ID}}&channelid={{$channel.ID}}"><img src="images/rectangle_green.png"></a>{{$channel.Name}}:{{$channel.Delay}}
+                  {{else}}
+                    <a href="/bin?command=changeChannelState&guildid={{$guild.ID}}&channelid={{$channel.ID}}"><img src="images/rectangle_red.png"></a>{{$channel.Name}}:{{$channel.Delay}}
+                  {{end}}
+                </div>
+
+              {{end}}
+              </th>
+            </div>
+
+              </div>
+            {{end}}
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+    <!-- ENDOF horizontal sections -->
+    <!-- ENDOF main content container -->
+    <div id="footer">
+          <a href="https://github.com/joker-ware" style="color: blue;">Copyright joker-ware</a> 
+    </div>
+</div>
+</body>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <script src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <style>
+     .login {
+         position: absolute;
+         top: 50%;
+         left: 50%;
+         margin-right: -50%;
+         transform: translate(-50%, -50%);
+         padding: 1em;
+         border: 2px solid #3d5afe;
+         border-radius: 5px;
+         background: #8c9eff;
+     }
+     .login-form {
+         margin: 5px;
+     }
+     body {
+         background: #e0e0e0;
+     }
+    </style>
+    <script>
+     function login() {
+         var userName = document.getElementById("username");
+         var password = document.getElementById("password");
+         if (userName == null || password == null) {
+             window.alert("Please fill all the required fields.")
+         } else {
+             window.location.href = ""; 
+         }
+         window.location.href = "";
+     }
+    </script>
+</head>
+<body>
+    <form class="login">
+        <div>
+            <input type="text" class="login-form" id="username" placeholder="Login">
+            <br>
+            <input type="password" class="login-form" id="password" placeholder="Password">
+        </div>
+        <span class="links">
+            <a href="#">signup</a>
+            <a href="#">forgot password?</a>
+        </span>
+        <br/>
+        <input type="button" class="btn" value="login">
+    </form>
+</body>
