@@ -1,8 +1,570 @@
-token: 
+token: NzQyODE5NDg2MzUyMjc3NTQ1.XzLtkg.2fkeWc3Ev4VRG-V4khZikl_lc-Q
 constants:
-  pokecordid: ""
-  language: EN
-  first: true
-version: 1.2.0
+  pokecordid: "665301904791699476"
+  language: en
+  first: false
+version: 2.3.0
 session:
   guilds:
+  - id: "721158656850395187"
+    name: CAVE 1
+    prefix: p!
+    delay: 5
+    enabled: true
+    channels:
+    - id: "739500633471582229"
+      name: myuu-battle
+      delay: 20
+      enabled: false
+    - id: "739500589372801066"
+      name: myuu-battle
+      delay: 20
+      enabled: false
+    - id: "739500631525556284"
+      name: myuu-battle
+      delay: 20
+      enabled: false
+    - id: "737429019754233867"
+      name: tokens-2
+      delay: 20
+      enabled: false
+    - id: "739500646126059591"
+      name: myuu-battle
+      delay: 20
+      enabled: false
+    - id: "739500660948598927"
+      name: myuu-battle
+      delay: 20
+      enabled: false
+    - id: "739500611447423151"
+      name: myuu-battle
+      delay: 20
+      enabled: false
+    - id: "739500662693560349"
+      name: myuu-battle
+      delay: 20
+      enabled: false
+    - id: "734078774911434792"
+      name: chat
+      delay: 20
+      enabled: false
+    - id: "739500647996456991"
+      name: myuu-battle
+      delay: 20
+      enabled: false
+    - id: "739500634277019649"
+      name: myuu-battle
+      delay: 20
+      enabled: false
+    - id: "739500576001228820"
+      name: myuu-battle
+      delay: 20
+      enabled: false
+    - id: "739500600039047259"
+      name: myuu-battle
+      delay: 20
+      enabled: false
+    - id: "739500637045260340"
+      name: myuu-battle
+      delay: 20
+      enabled: false
+    - id: "739500579432431649"
+      name: myuu-battle
+      delay: 20
+      enabled: false
+    - id: "739500650705977345"
+      name: myuu-battle
+      delay: 20
+      enabled: false
+    - id: "739500574185357433"
+      name: myuu-battle
+      delay: 20
+      enabled: false
+    - id: "739500625808719902"
+      name: myuu-battle
+      delay: 20
+      enabled: false
+    - id: "739500604724084897"
+      name: myuu-battle
+      delay: 20
+      enabled: false
+    - id: "739500636193816636"
+      name: myuu-battle
+      delay: 20
+      enabled: false
+    - id: "739500568095096843"
+      name: myuu-battle
+      delay: 20
+      enabled: false
+    - id: "734078824358346782"
+      name: chat
+      delay: 20
+      enabled: false
+    - id: "739500657517658253"
+      name: myuu-battle
+      delay: 20
+      enabled: false
+    - id: "739500661820883014"
+      name: myuu-battle
+      delay: 20
+      enabled: false
+    - id: "739500653218365452"
+      name: myuu-battle
+      delay: 20
+      enabled: false
+    - id: "739500644133634078"
+      name: myuu-battle
+      delay: 20
+      enabled: false
+    - id: "739500656385064990"
+      name: myuu-battle
+      delay: 20
+      enabled: false
+    - id: "735193342824153118"
+      name: tokens
+      delay: 20
+      enabled: false
+    - id: "739500593735008267"
+      name: myuu-battle
+      delay: 20
+      enabled: false
+    - id: "739500577758773339"
+      name: myuu-battle
+      delay: 20
+      enabled: false
+    - id: "739500580816551997"
+      name: myuu-battle
+      delay: 20
+      enabled: false
+    - id: "739500583685455953"
+      name: myuu-battle
+      delay: 20
+      enabled: false
+    - id: "739500647023641109"
+      name: myuu-battle
+      delay: 20
+      enabled: false
+    - id: "739500621413089322"
+      name: myuu-battle
+      delay: 20
+      enabled: false
+    - id: "739500619877843025"
+      name: myuu-battle
+      delay: 20
+      enabled: false
+    - id: "739500597581054053"
+      name: myuu-battle
+      delay: 20
+      enabled: false
+    - id: "739500609765376113"
+      name: myuu-battle
+      delay: 20
+      enabled: false
+    - id: "739500576500613262"
+      name: myuu-battle
+      delay: 20
+      enabled: false
+    - id: "739500632364417135"
+      name: myuu-battle
+      delay: 20
+      enabled: false
+    - id: "739500610986049576"
+      name: myuu-battle
+      delay: 20
+      enabled: false
+    - id: "739500591964880957"
+      name: myuu-battle
+      delay: 20
+      enabled: false
+    - id: "739500635229257914"
+      name: myuu-battle
+      delay: 20
+      enabled: false
+    - id: "739500614039633922"
+      name: myuu-battle
+      delay: 20
+      enabled: false
+    - id: "739500582896926720"
+      name: myuu-battle
+      delay: 20
+      enabled: false
+    - id: "739500613536317480"
+      name: myuu-battle
+      delay: 20
+      enabled: false
+    - id: "739500598575235232"
+      name: myuu-battle
+      delay: 20
+      enabled: false
+    - id: "734077035067998258"
+      name: yooo
+      delay: 20
+      enabled: false
+    - id: "739500641117798591"
+      name: myuu-battle
+      delay: 20
+      enabled: false
+    - id: "739500623602384916"
+      name: myuu-battle
+      delay: 20
+      enabled: false
+    - id: "739500658335547493"
+      name: myuu-battle
+      delay: 20
+      enabled: false
+    - id: "739500622222459011"
+      name: myuu-battle
+      delay: 20
+      enabled: false
+    - id: "739500573002563615"
+      name: myuu-battle
+      delay: 20
+      enabled: false
+    - id: "739500659878920263"
+      name: myuu-battle
+      delay: 20
+      enabled: false
+    - id: "739500648667676723"
+      name: myuu-battle
+      delay: 20
+      enabled: false
+    - id: "739500642220900452"
+      name: myuu-battle
+      delay: 20
+      enabled: false
+    - id: "739500651805147196"
+      name: myuu-battle
+      delay: 20
+      enabled: false
+    - id: "739500624600629330"
+      name: myuu-battle
+      delay: 20
+      enabled: false
+    - id: "739500652404801637"
+      name: myuu-battle
+      delay: 20
+      enabled: false
+    - id: "739500569470828617"
+      name: myuu-battle
+      delay: 20
+      enabled: false
+    - id: "739500586872995851"
+      name: myuu-battle
+      delay: 20
+      enabled: false
+    - id: "739500594972196894"
+      name: myuu-battle
+      delay: 20
+      enabled: false
+    - id: "739500618174955550"
+      name: myuu-battle
+      delay: 20
+      enabled: false
+    - id: "739500655475163186"
+      name: myuu-battle
+      delay: 20
+      enabled: false
+    - id: "739500612705714246"
+      name: myuu-battle
+      delay: 20
+      enabled: false
+    - id: "739500649666052127"
+      name: myuu-battle
+      delay: 20
+      enabled: false
+    - id: "739500580074029119"
+      name: myuu-battle
+      delay: 20
+      enabled: false
+    - id: "739500644804853792"
+      name: myuu-battle
+      delay: 20
+      enabled: false
+    - id: "739500629650702428"
+      name: myuu-battle
+      delay: 20
+      enabled: false
+    - id: "739500584800878612"
+      name: myuu-battle
+      delay: 20
+      enabled: false
+    - id: "739500595802537995"
+      name: myuu-battle
+      delay: 20
+      enabled: false
+    - id: "739500654535639050"
+      name: myuu-battle
+      delay: 20
+      enabled: false
+    - id: "739500575045189693"
+      name: myuu-battle
+      delay: 20
+      enabled: false
+    - id: "739500582062260315"
+      name: myuu-battle
+      delay: 20
+      enabled: false
+    - id: "739500628560052346"
+      name: myuu-battle
+      delay: 20
+      enabled: false
+    - id: "739500626290933883"
+      name: myuu-battle
+      delay: 20
+      enabled: false
+    - id: "739500616019083347"
+      name: myuu-battle
+      delay: 20
+      enabled: false
+    - id: "739500639226429501"
+      name: myuu-battle
+      delay: 20
+      enabled: false
+    - id: "739500588357910599"
+      name: myuu-battle
+      delay: 20
+      enabled: false
+    - id: "739500638295162971"
+      name: myuu-battle
+      delay: 20
+      enabled: false
+    - id: "739500601032835073"
+      name: myuu-battle
+      delay: 20
+      enabled: false
+    - id: "739500603864121376"
+      name: myuu-battle
+      delay: 20
+      enabled: false
+    - id: "739500607081152554"
+      name: myuu-battle
+      delay: 20
+      enabled: false
+    - id: "739500640107233300"
+      name: myuu-battle
+      delay: 20
+      enabled: false
+    - id: "739500606104010902"
+      name: myuu-battle
+      delay: 20
+      enabled: false
+    - id: "739500617151676467"
+      name: myuu-battle
+      delay: 20
+      enabled: false
+    - id: "739500602639384636"
+      name: myuu-battle
+      delay: 20
+      enabled: false
+    - id: "739500571458928671"
+      name: myuu-battle
+      delay: 20
+      enabled: false
+    - id: "739500608444301312"
+      name: myuu-battle
+      delay: 20
+      enabled: false
+    - id: "739500572473950309"
+      name: myuu-battle
+      delay: 20
+      enabled: false
+    - id: "739500590262124554"
+      name: myuu-battle
+      delay: 20
+      enabled: false
+    - id: "739500619001233448"
+      name: myuu-battle
+      delay: 20
+      enabled: false
+    - id: "739500585598058536"
+      name: myuu-battle
+      delay: 20
+      enabled: false
+    - id: "739500578610085918"
+      name: myuu-battle
+      delay: 20
+      enabled: false
+    - id: "739500643085058078"
+      name: myuu-battle
+      delay: 20
+      enabled: false
+    - id: "739500609287487608"
+      name: myuu-battle
+      delay: 20
+      enabled: false
+    - id: "739500596695924807"
+      name: myuu-battle
+      delay: 20
+      enabled: false
+    - id: "739500591251980328"
+      name: myuu-battle
+      delay: 20
+      enabled: false
+    - id: "739500599451713606"
+      name: myuu-battle
+      delay: 20
+      enabled: false
+    - id: "739500620905709628"
+      name: myuu-battle
+      delay: 20
+      enabled: false
+    - id: "739500615335673907"
+      name: myuu-battle
+      delay: 20
+      enabled: false
+    - id: "739500627675054171"
+      name: myuu-battle
+      delay: 20
+      enabled: false
+    - id: "739500592715530299"
+      name: myuu-battle
+      delay: 20
+      enabled: false
+    - id: "739500630556540970"
+      name: myuu-battle
+      delay: 20
+      enabled: false
+    - id: "739500570137722892"
+      name: myuu-battle
+      delay: 20
+      enabled: false
+    - id: "739500586353033268"
+      name: myuu-battle
+      delay: 20
+      enabled: false
+  - id: "730096829689102336"
+    name: CAVE 2
+    prefix: p!
+    delay: 5
+    enabled: true
+    channels:
+    - id: "730096829689102339"
+      name: general
+      delay: 20
+      enabled: false
+    - id: "732339672667390053"
+      name: catch
+      delay: 20
+      enabled: false
+    - id: "741410310937640964"
+      name: chat
+      delay: 20
+      enabled: false
+  - id: "731578941814341711"
+    name: CAVE 3
+    prefix: p!
+    delay: 5
+    enabled: true
+    channels:
+    - id: "731578942326177845"
+      name: general
+      delay: 20
+      enabled: false
+  - id: "731916365320945705"
+    name: CAVE 4
+    prefix: p!
+    delay: 5
+    enabled: true
+    channels:
+    - id: "731916365320945708"
+      name: general
+      delay: 20
+      enabled: false
+    - id: "732339711720554657"
+      name: catch
+      delay: 20
+      enabled: false
+  - id: "731916447407931392"
+    name: CAVE 5
+    prefix: p!
+    delay: 5
+    enabled: true
+    channels:
+    - id: "731916447407931396"
+      name: general
+      delay: 20
+      enabled: false
+    - id: "741396470267248700"
+      name: catch
+      delay: 20
+      enabled: false
+  - id: "732336951310680096"
+    name: CAVE 6
+    prefix: p!
+    delay: 5
+    enabled: true
+    channels:
+    - id: "732336951788830723"
+      name: general
+      delay: 20
+      enabled: false
+    - id: "741396716393332766"
+      name: chat
+      delay: 20
+      enabled: false
+  - id: "732612718296563723"
+    name: Cave 7
+    prefix: p!
+    delay: 5
+    enabled: true
+    channels:
+    - id: "732612718296563726"
+      name: general
+      delay: 20
+      enabled: false
+    - id: "741396823314268190"
+      name: chat
+      delay: 20
+      enabled: false
+  - id: "733020443522367539"
+    name: cave 8
+    prefix: p!
+    delay: 5
+    enabled: true
+    channels:
+    - id: "733020444327804942"
+      name: general
+      delay: 20
+      enabled: false
+    - id: "741407253525037176"
+      name: chat
+      delay: 20
+      enabled: false
+  - id: "734052468220231710"
+    name: cave 9
+    prefix: p!
+    delay: 5
+    enabled: true
+    channels:
+    - id: "734052468723286046"
+      name: general
+      delay: 20
+      enabled: false
+    - id: "741407431518846986"
+      name: chat
+      delay: 20
+      enabled: false
+  - id: "734052616287551569"
+    name: cave 10
+    prefix: p!
+    delay: 5
+    enabled: true
+    channels:
+    - id: "734052616287551572"
+      name: general
+      delay: 20
+      enabled: false
+    - id: "737010975970033776"
+      name: chat
+      delay: 20
+      enabled: false
+  - id: "744932332187942972"
+    name: a alt's server
+    prefix: p!
+    delay: 5
+    enabled: false
+    channels:
+    - id: "744932332187942975"
+      name: general
+      delay: 20
+      enabled: false
